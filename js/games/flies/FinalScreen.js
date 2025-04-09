@@ -48,16 +48,6 @@ class FinalScreen {
             const tryAgainBtn = document.querySelector('.btn-action.red');
             const continueBtn = document.querySelector('.btn-action.green');
             
-            // Rojo (Intentar otra vez)
-            if (e.key === '1' && tryAgainBtn) {
-                tryAgainBtn.style.transform = 'scale(0.95)';
-                tryAgainBtn.style.boxShadow = 'inset 0 0 10px rgba(0,0,0,0.3)';
-                setTimeout(() => {
-                    window.location.href = "../../../games/flies/flies_game.html";
-                }, 200);
-                return;
-            }
-            
             // Azul (Continuar)
             if (e.key === '2' && continueBtn) {
                 continueBtn.style.transform = 'scale(0.95)';

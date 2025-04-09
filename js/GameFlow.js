@@ -20,9 +20,9 @@ class GameFlow {
             return "../games/sequence/sequence_start.html";
         } else if (!player.results.colors) {
             return "../games/colors/colors_start.html";
-        } */else {
+        } else {
             // Todos los juegos completados, mostrar resultados finales
             return "../../../final_results.html";
-        }
+        } */
     }
 }
