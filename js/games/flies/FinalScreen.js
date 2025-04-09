@@ -99,7 +99,7 @@ class FinalScreen {
         
         if (this.winner.isTie) {
             isCorrect = this.tiedWinners.includes(selectedIndex);
-            const tiedColors = this.tiedWinners.map(i => this.colorNames[i]).join(' y ');
+            const tiedColors = this.tiedWinners.map(i => this.colorNames[i]).join(', ');
             
             resultMessage = isCorrect
                 ? `<p class="success">¡Correcto! Hubo empate entre ${tiedColors} con ${this.winner.count} moscas cada uno.</p>`
@@ -139,19 +139,12 @@ class FinalScreen {
     showActionButtons() {
         this.actionButtonsContainer.innerHTML = '';
         
-        // Botón rojo - Intentar otra vez
-        const tryAgainBtn = document.createElement('div');
-        tryAgainBtn.className = "btn-action red";
-        tryAgainBtn.textContent = "Intentar otra vez";
-        tryAgainBtn.style.pointerEvents = 'none';
-        
         // Botón verde - Continuar
         const continueBtn = document.createElement('div');
         continueBtn.className = "btn-action green";
         continueBtn.textContent = "Continuar";
         continueBtn.style.pointerEvents = 'none';
         
-        this.actionButtonsContainer.appendChild(tryAgainBtn);
         this.actionButtonsContainer.appendChild(continueBtn);
         this.actionButtonsContainer.style.display = 'flex';
     }

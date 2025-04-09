@@ -20,6 +20,6 @@ class Target {
     incrementCount() {
         this.count++;
         console.log(this.color + ":  " + this.count);
-        // this.element.textContent = `${this.id + 1} (${this.count})`;
+        this.element.textContent = `${this.count}`;
     }
 }
