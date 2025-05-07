@@ -97,7 +97,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         setTimeout(() => {
             player.saveToLocalStorage();
-            window.location.href = "games/flies/flies_start.html";
+            window.location.href = "/games/flies/flies_start.html";
         }, 1000);
     });
 });

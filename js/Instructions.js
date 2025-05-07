@@ -24,7 +24,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // Fallback si no redirige
         setTimeout(() => {
             if (window.location.href.includes('instructions')) {
-                window.location.href = 'registration.html';
+                window.location.href = '/registration.html';
             }
         }, 1000);
     };

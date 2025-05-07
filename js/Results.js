@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     // 1. Cargar y mostrar datos del jugador
     const player = Player.loadFromLocalStorage();
     if (!player) {
-        window.location.href = "registration.html";
+        window.location.href = "/registration.html";
         return;
     }
 
@@ -37,7 +37,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         if (inputType === 'red' || inputType === '1') {
             handleButtonInteraction(backBtn, () => {
-                window.location.href = "registration.html";
+                window.location.href = "/registration.html";
             });
         } 
         else if (inputType === 'blue' || inputType === '4') {
