@@ -1,0 +1,115 @@
+/* Estilos generales */
+body {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #FFF8E1;
+    overflow: hidden;
+    touch-action: manipulation;
+    font-family: Arial, sans-serif;
+}
+
+.game-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+.info-panel {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    margin-bottom: 20px;
+    font-size: 1.2em;
+}
+
+.info-panel div {
+    padding: 5px 10px;
+    background: white;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.board {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    width: 300px;
+    height: 300px;
+}
+
+/* Estilos para los círculos - Versión menos opaca */
+.circle {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    opacity: 0.5; /* Cambiado de 0.3 a 0.7 */
+    filter: grayscale(20%) brightness(0.95); /* Reducido el efecto de grises */
+}
+
+/* Estado activo (color completo) */
+.circle.active {
+    opacity: 1;
+    filter: grayscale(0%) brightness(1);
+    transform: scale(1.05);
+    box-shadow: 0 0 15px rgba(255,255,255,0.4);
+}
+
+/* Colores base - más vibrantes */
+.red { background: #FF5252; }
+.green { background: #4CAF50; }
+.yellow { background: #FFEB3B; } /* Amarillo más brillante */
+.blue { background: #2196F3; }
+
+/* Efecto al pasar el mouse (opcional) */
+.circle:hover {
+    opacity: 0.85;
+    filter: grayscale(10%) brightness(0.95);
+}
+
+/* Botón de inicio */
+.start-button {
+    padding: 12px 24px;
+    font-size: 1.2em;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    margin-top: 20px;
+}
+
+.start-button:hover {
+    background-color: #45a049;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0,0,0,0.25);
+}
+
+.start-button:active {
+    transform: scale(0.98);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+/* Mensajes del juego */
+.message {
+    text-align: center;
+    font-weight: bold;
+    color: #333;
+    min-height: 20px;
+    margin-top: 10px;
+}
+
+/* Efecto de pulsación */
+.circle:active {
+    transform: scale(0.95);
+}

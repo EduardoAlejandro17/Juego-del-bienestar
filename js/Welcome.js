@@ -1,39 +1,57 @@
+import InteractionManager from './InteractionManager.js';
+import PhysicalButtonsStrategy from './strategies/PhysicalButtonsStrategy.js';
+import TouchScreenStrategy from './strategies/TouchScreenStrategy.js';
+import MouseStrategy from './strategies/MouseStrategy.js';
+
 document.addEventListener('DOMContentLoaded', () => {
-    // Mapeo de teclas a colores
-    const keyMap = {
-        '1': 'red',
-        '2': 'green',
-        '3': 'yellow', 
-        '4': 'blue'
-    };
-
-    // Seleccionar todos los círculos
-    const circles = document.querySelectorAll('.circle');
-    
-    // Función para redirigir
+    // Función de redirección robusta
     const redirect = () => {
-        window.location.href = "instructions.html";
+        const baseUrl = window.location.href.replace(/\/[^/]*$/, '');
+        const redirectUrl = `${baseUrl}/instructions.html`;
+        
+        console.log('Redirigiendo a:', redirectUrl);
+        window.location.assign(redirectUrl);
+        
+        // Fallback después de 1 segundo
+        setTimeout(() => {
+            if (window.location.href !== redirectUrl) {
+                window.location.href = redirectUrl;
+            }
+        }, 1000);
     };
 
-    // Eventos para clic/touch en círculos
-    circles.forEach(circle => {
-        circle.addEventListener('click', redirect);
+    // Manejador de interacción
+    const handleInteraction = (color) => {
+        console.log('Interacción con:', color);
+        const circle = document.querySelector(`.${color}`);
+        if (circle) {
+            circle.classList.add('active');
+            setTimeout(redirect, 200);
+            setTimeout(() => circle.classList.remove('active'), 500);
+        }
+    };
+
+    // Configuración del gestor de interacciones
+    const interactionManager = new InteractionManager();
+    
+    interactionManager.setStrategyImplementations({
+        PHYSICAL_BUTTONS: new PhysicalButtonsStrategy(handleInteraction),
+        TOUCH_SCREEN: new TouchScreenStrategy(handleInteraction),
+        MOUSE: new MouseStrategy(handleInteraction)
     });
 
-    // Eventos de teclado
-    document.addEventListener('keydown', (e) => {
-        if (keyMap[e.key]) {
-            // Efecto visual al presionar tecla
-            const circle = document.querySelector(`.${keyMap[e.key]}`);
-            circle.style.transform = 'scale(0.95)';
-            circle.style.boxShadow = 'inset 0 0 15px rgba(0,0,0,0.5)';
-            
-            // Redirigir después de breve animación
-            setTimeout(() => {
-                circle.style.transform = 'scale(1)';
-                circle.style.boxShadow = '0 5px 15px rgba(0,0,0,0.2)';
-                redirect();
-            }, 200);
-        }
-    });
+    // Detección automática del dispositivo
+    const isTouchDevice = () => {
+        return ('ontouchstart' in window) || 
+               (navigator.maxTouchPoints > 0) || 
+               (navigator.msMaxTouchPoints > 0);
+    };
+
+    interactionManager.setStrategy(
+        isTouchDevice() ? 'TOUCH_SCREEN' : 'MOUSE'
+    );
+
+    // Para depuración
+    window.debugRedirect = redirect;
+    console.log('Aplicación iniciada. Modo actual:', isTouchDevice() ? 'Táctil' : 'Mouse');
 });

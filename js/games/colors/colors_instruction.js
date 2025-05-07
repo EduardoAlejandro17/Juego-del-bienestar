@@ -22,14 +22,14 @@ document.addEventListener('DOMContentLoaded', async () => {
             startBtn.classList.add('pressed');
             setTimeout(() => {
                 console.log('Redirigiendo a flies_game.html');
-                window.location.href = "flies_game.html"; // Redirige a la página de juego
+                window.location.href = "../../final_results.html"; // Redirige a la página de juego
             }, 200);
         });
     }
 
     if (!player) {
         console.log('No se encontró jugador. Redirigiendo a registration.html');
-        window.location.href = "registration.html";
+        window.location.href = "../sequence_game.html";
         return;
     }
 
@@ -42,7 +42,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     
     const welcomeTitle = document.getElementById('welcome-title');
     if (welcomeTitle) {
-        welcomeTitle.textContent = `¡${greetings[player.gender] || 'Atención'} ${player.name}!`;
+        welcomeTitle.textContent = `¡${greetings[player.gender] || 'Atención'} ${player.name}!\n`;
     }
 
     // Definir el interactionHandler

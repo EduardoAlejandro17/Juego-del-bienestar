@@ -8,6 +8,7 @@ class Game {
         this.gameActive = false;
         this.lastFlyTime = Date.now();
         this.spawnInterval = (20 * 1000) / this.totalFlies;
+        
     }
 
     startGame() {
@@ -44,17 +45,25 @@ class Game {
     endGame() {
         this.gameActive = false;
         
-        const maxCount = Math.max(...this.targets.map(t => t.count));
-        const winners = this.targets.filter(t => t.count === maxCount);
-        const winner = winners[Math.floor(Math.random() * winners.length)];
+        const counts = this.targets.map(t => t.count);
+        const maxCount = Math.max(...counts);
+        const sortedTargets = [...this.targets].sort((a, b) => b.count - a.count);
         
         localStorage.setItem('gameResults', JSON.stringify({
-            winner: { 
-                id: winner.id, 
-                count: winner.count,
-                isTie: winners.length > 1
+            targets: sortedTargets.map(t => ({
+                id: t.id,
+                color: t.color,
+                count: t.count,
+                position: sortedTargets.findIndex(target => target.id === t.id) + 1
+            })),
+            winner: {
+                id: sortedTargets[0].id,
+                color: sortedTargets[0].color,
+                count: sortedTargets[0].count,
+                isTie: sortedTargets[0].count === sortedTargets[1]?.count
             },
-            tiedWinners: winners.length > 1 ? winners.map(w => w.id) : null
+            tiedWinners: sortedTargets.filter(t => t.count === maxCount).map(t => t.id),
+            gameDuration: Date.now() - this.startTime
         }));
         
         setTimeout(() => window.location.href = "flies_final.html", 1000);

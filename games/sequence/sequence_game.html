@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Juego de Secuencia de Colores</title>
+    <link rel="stylesheet" href="../../css/sequence.css">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+</head>
+<body>
+    <div class="game-container">
+        <div class="info-panel">
+            <div class="score">Puntos: <span id="score">0</span></div>
+            <div class="round">Ronda: <span id="round">1</span></div>
+            <div class="timer">Tiempo: <span id="timer">1.5</span>s</div>
+            <div class="message" id="message"></div>
+        </div>
+        
+        <div class="board">
+            <div class="circle red"></div>
+            <div class="circle green"></div>
+            <div class="circle yellow"></div>
+            <div class="circle blue"></div>
+        </div>
+        
+        <button id="startBtn" class="start-button">
+            <span class="button-text">Comenzar Juego</span>
+        </button>
+    </div>
+
+    <script type="module" src="../../js/games/sequence/main.js"></script>
+</body>
+</html>

@@ -1,143 +1,103 @@
-// Espera a que el documento HTML esté completamente cargado
+import MouseStrategy from './strategies/MouseStrategy.js';
+import TouchScreenStrategy from './strategies/TouchScreenStrategy.js';
+import PhysicalButtonsStrategy from './strategies/PhysicalButtonsStrategy.js';
+import InteractionManager from './InteractionManager.js';
+import Player from './Player.js';
+
 document.addEventListener('DOMContentLoaded', () => {
-    // Crea una nueva instancia del jugador
     const player = new Player();
-    
-    // Obtiene referencias a los elementos del DOM
-    const nameInput = document.getElementById('name'); // Campo de entrada del nombre
-    const startBtn = document.getElementById('start-btn'); // Botón de comenzar
-    const genderElements = { // Botones de género
-        'el': document.querySelector('[data-gender="el"]'),
-        'ella': document.querySelector('[data-gender="ella"]'),
-        'elle': document.querySelector('[data-gender="elle"]'),
-        'otro': document.querySelector('[data-gender="otro"]')
-    };
-    
-    // Conjunto para rastrear teclas presionadas (para la combinación)
-    let pressedButtons = new Set();
-    // Bandera para indicar si se ha seleccionado un género
-    let genderLocked = false;
+    const nameInput = document.getElementById('name');
+    const startBtn = document.getElementById('start-btn');
+    const genderButtons = document.querySelectorAll('.color-btn');
 
-    // Mapeo de teclas numéricas a géneros
-    const keyMap = {
-        '1': 'el',     // Botón rojo para "Él"
-        '2': 'ella',   // Botón verde para "Ella"
-        '3': 'elle',   // Botón amarillo para "Elle"
-        '4': 'otro'    // Botón azul para "Otro"
-    };
-
-    // Enfoca automáticamente el campo de nombre al cargar
-    nameInput.focus();
-
-    // Configuración inicial de los botones de género
-    Object.values(genderElements).forEach(element => {
-        // Deshabilita la interacción con mouse
-        element.style.pointerEvents = 'none'; // Evita clics del mouse
-        element.style.cursor = 'default';     // Oculta el cursor de mano
-    });
-
-    /**
-     * Maneja el evento keydown (tecla presionada)
-     * Permite seleccionar género y activar combinación
-     */
-    document.addEventListener('keydown', (e) => {
-        // Selección de género con teclas numéricas
-        if (keyMap[e.key] && !genderLocked) {
-            const gender = keyMap[e.key];
-            lockGender(gender); // Bloquea el género seleccionado
-            
-            // Efecto visual: resalta la opción seleccionada
-            Object.entries(genderElements).forEach(([g, element]) => {
-                element.style.opacity = g === gender ? '1' : '0.6'; // Opacidad completa para seleccionado
-            });
-        }
-        
-        // Lógica para la combinación de teclas (1-2-3-4)
-        if (keyMap[e.key]) {
-            handleComboPress(e.key);
-        }
-    });
-
-    /**
-     * Maneja el evento keyup (tecla liberada)
-     * Para la combinación de teclas
-     */
-    document.addEventListener('keyup', (e) => {
-        if (keyMap[e.key]) {
-            handleComboRelease(e.key);
-        }
-    });
-
-    // Valida el formulario cada vez que cambia el nombre
-    nameInput.addEventListener('input', validateForm);
-
-    /**
-     * Bloquea el género seleccionado y actualiza el objeto player
-     * @param {string} gender - Género seleccionado ('el', 'ella', 'elle', 'otro')
-     */
-    function lockGender(gender) {
-        genderLocked = true; // Marca que ya se seleccionó género
-        player.gender = gender; // Asigna al objeto jugador
-        validateForm(); // Revalida el formulario
+    if (!startBtn || genderButtons.length === 0) {
+        console.error('Faltan los elementos necesarios en el HTML');
+        return;
     }
 
-    /**
-     * Maneja la presión de teclas para la combinación
-     * @param {string} key - Tecla presionada ('1', '2', '3' o '4')
-     */
-    function handleComboPress(key) {
-        if (!keyMap[key]) return; // Ignora teclas no mapeadas
-        
-        // Añade la tecla al conjunto de teclas presionadas
-        pressedButtons.add(key);
-        // Aplica efecto visual al botón correspondiente
-        genderElements[keyMap[key]].classList.add('combo-active');
-        
-        // Si se presionaron las 4 teclas y el formulario está completo
-        if (pressedButtons.size === 4 && player.name && genderLocked) {
-            // Efecto visual en el botón de comenzar
-            startBtn.classList.add('active-combo');
-            setTimeout(() => {
-                startBtn.classList.remove('active-combo');
-                handleStart(); // Inicia la aplicación después del efecto
-            }, 500);
-        }
-    }
+    const interactionManager = new InteractionManager();
 
-    /**
-     * Maneja la liberación de teclas para la combinación
-     * @param {string} key - Tecla liberada ('1', '2', '3' o '4')
-     */
-    function handleComboRelease(key) {
-        if (!keyMap[key]) return; // Ignora teclas no mapeadas
-        // Elimina la tecla del conjunto
-        pressedButtons.delete(key);
-        // Quita el efecto visual del botón
-        genderElements[keyMap[key]].classList.remove('combo-active');
-    }
+    let selectedGender = null;
+    let physicalButtonState = { red: false, green: false, yellow: false, blue: false };
 
-    /**
-     * Valida si el formulario está completo para habilitar el botón
-     */
     function validateForm() {
-        // Asigna el nombre (sin espacios extras) al jugador
-        player.name = nameInput.value.trim();
-        // Habilita el botón solo si hay nombre y género seleccionado
-        startBtn.disabled = !(player.name && genderLocked);
+        const isValid = player.name && selectedGender;
+        startBtn.disabled = !isValid;
     }
 
-    /**
-     * Maneja el inicio de la aplicación después de validar
-     */
-    function handleStart() {
-        // Validación adicional por seguridad
-        if (!player.name || !genderLocked) {
-            alert('Completa tu nombre y selecciona un género primero');
+    nameInput.addEventListener('input', () => {
+        player.name = nameInput.value.trim();
+        console.log(`[DEBUG] Nombre ingresado: "${player.name}"`);
+        validateForm();
+    });
+
+    function selectGender(color) {
+        if (selectedGender) return;
+    
+        const selectedButton = Array.from(genderButtons).find(button => button.classList.contains(color));
+        if (!selectedButton) return;
+    
+        selectedGender = selectedButton.dataset.gender;
+        player.gender = selectedGender;
+    
+        console.log(`[DEBUG] Pronombre seleccionado: "${selectedGender}"`);
+    
+        genderButtons.forEach(btn => {
+            btn.disabled = true;
+            btn.classList.remove('selected');
+        });
+    
+        selectedButton.classList.add('selected');
+    
+        validateForm();
+    }    
+    
+    function handlePhysicalInteraction(color, pressed) {
+        physicalButtonState[color] = pressed;
+
+        console.log(`[DEBUG] Botón físico "${color}" está ${pressed ? "PRESIONADO" : "LIBERADO"}`);
+
+        if (Object.values(physicalButtonState).every(state => state)) {
+            console.log("[DEBUG] Todos los botones físicos están presionados. Intentando continuar...");
+            if (!startBtn.disabled) {
+                startBtn.click();
+            } else {
+                console.log("[DEBUG] No se puede continuar. El formulario está incompleto.");
+            }
+        }
+    }
+
+    function handleInteraction(color) {
+        if (!selectedGender) {
+            selectGender(color);
+        }
+    }
+
+    interactionManager.setStrategyImplementations({
+        mouse: new MouseStrategy(handleInteraction),
+        touch: new TouchScreenStrategy(handleInteraction),
+        physical: new PhysicalButtonsStrategy(handlePhysicalInteraction)
+    });
+
+    genderButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            const color = button.classList[1]; // segundo classList es el color
+            selectGender(color);
+        });
+    });
+
+    startBtn.addEventListener('click', () => {
+        if (!player.name || !selectedGender) {
+            console.log("[DEBUG] Intento de continuar sin llenar el formulario.");
             return;
         }
-        // Guarda el jugador en localStorage
-        player.saveToLocalStorage();
-        // Redirige a la pantalla de inicio del juego
-        window.location.href = "games/flies/flies_start.html";
-    }
+
+        startBtn.disabled = true;
+        console.log("[DEBUG] Iniciando...");
+
+        setTimeout(() => {
+            player.saveToLocalStorage();
+            window.location.href = "games/flies/flies_start.html";
+        }, 1000);
+    });
 });

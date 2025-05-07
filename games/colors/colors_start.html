@@ -3,34 +3,37 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Instrucciones</title>
-    <link rel="stylesheet" href="css/instructions.css">
+    <title>Juego de Secuencia</title>
+    <link rel="stylesheet" href="../../css/instructions.css">
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
-    <base href="/"> <!-- Para rutas consistentes -->
+    <base href="/">
 </head>
 <body>
     <div class="instructions-container">
+      <h1 id="welcome-title" class="game-title"></h1>
+
         <div class="instructions-message">
-            <p>Hola estudiante, para interactuar con la plataforma tendrás que hacerlo con los botones que tienes a disposición:</p>
+            <p>¡Bienvenido al juego de secuencias! Memoriza y repite los patrones de colores que se te mostrarán.</p>
             
+            <p>¡Usa los botones correspondientes para repetir la secuencia!</p>
+
             <div class="color-circles">
                 <div class="color-circle red"></div>
                 <div class="color-circle green"></div>
                 <div class="color-circle yellow"></div>
                 <div class="color-circle blue"></div>
             </div>
-            
-            <p>Cada acción tiene un color correspondiente.</p>
-            <p>¡Solo para escribir podrás utilizar el teclado!</p>
-            <p>¿Listo para comenzar? ¡Entonces adelante!</p>
+
+            <p>¡Comencemos!</p>
         </div>
         
         <button id="continue-btn" class="green-button interactive">
-            Continuar
+            Comenzar
         </button>
     </div>
     
-    <script type="module" src="js/instructions.js"></script> <!-- Nota: archivo en minúsculas -->
+    <script type="module" src="../../js/games/sequence/sequence_instruction.js"></script>
 </body>
+</html>

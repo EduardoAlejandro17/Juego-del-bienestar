@@ -77,6 +77,12 @@
     box-shadow: 0 5px 10px rgba(0,0,0,0.3);
 }
 
+.color-btn.selected {
+    opacity: 1 !important;
+    filter: brightness(1.05);
+    outline: 3px solid rgba(0, 0, 0, 0.3);
+}
+
 .color-btn:disabled {
     opacity: 0.6 !important;
     transform: none !important;
@@ -84,12 +90,17 @@
     cursor: not-allowed !important;
 }
 
+.color-btn.selected:disabled {
+    opacity: 1 !important;
+    filter: brightness(1.05);
+    outline: 3px solid rgba(0, 0, 0, 0.4);
+}
+
 .color-btn.red { background: #FF5252; }
 .color-btn.green { background: #4CAF50; }
 .color-btn.blue { background: #2196F3; }
 .color-btn.yellow { background: #FFD600; }
 
-/* Botón Comenzar con distribución rectangular perfecta */
 #start-btn {
     position: relative;
     padding: 0;
@@ -113,7 +124,6 @@
     align-items: center;
 }
 
-/* Distribución rectangular 2x2 */
 #start-btn::before {
     content: '';
     position: absolute;
@@ -122,24 +132,19 @@
     top: 0;
     left: 0;
     background: 
-        /* Fila superior */
         linear-gradient(to right, 
             #FF5252 0%, #FF5252 50%, 
             #4CAF50 50%, #4CAF50 100%),
-        /* Fila inferior */
         linear-gradient(to right, 
             #FFD600 0%, #FFD600 50%, 
             #2196F3 50%, #2196F3 100%);
     background-size: 100% 50%;
     background-repeat: no-repeat;
-    background-position: 
-        0 0,    /* Fila superior */
-        0 100%; /* Fila inferior */
+    background-position: 0 0, 0 100%;
     z-index: -1;
     border-radius: 8px;
 }
 
-/* Texto del botón centrado */
 .btn-text {
     font-weight: bold;
     font-size: 20px;
@@ -154,18 +159,15 @@
     width: 100%;
 }
 
-/* Efecto hover */
 #start-btn:hover:not(:disabled) {
     transform: translateY(-3px);
     box-shadow: 0 6px 12px rgba(0,0,0,0.15);
 }
 
-/* Efecto al presionar */
 #start-btn:active:not(:disabled) {
     transform: translateY(1px);
 }
 
-/* Estilo deshabilitado */
 #start-btn:disabled {
     background: #e0e0e0;
     color: #999;
@@ -176,48 +178,4 @@
 
 #start-btn:disabled::before {
     opacity: 0.5;
-}
-
-/* Estilos para estado bloqueado */
-.gender-locked {
-    pointer-events: none;
-}
-
-#name:disabled {
-    background-color: transparent;
-    border: 2px solid #4CAF50;
-}
-
-.selected {
-    transform: scale(1.05);
-    box-shadow: 0 0 0 3px rgba(0,0,0,0.1);
-}
-
-/* Estilo para la combinación activa */
-.color-btn.combo-active {
-    transform: scale(0.95);
-    box-shadow: inset 0 0 15px rgba(0,0,0,0.7);
-    filter: brightness(1.2);
-}
-
-/* Efecto cuando se activa */
-#start-btn.active-combo {
-    animation: pulse 0.5s;
-}
-
-@keyframes pulse {
-    0% { transform: scale(1); }
-    50% { transform: scale(1.05); }
-    100% { transform: scale(1); }
-}
-
-[data-gender] {
-    pointer-events: none; /* Bloquea interacción por mouse */
-    cursor: default !important; /* Oculta el cursor de mano */
-    transition: opacity 0.3s; /* Para el efecto visual */
-}
-
-.combo-active {
-    transform: scale(0.95);
-    box-shadow: inset 0 0 10px rgba(0,0,0,0.3);
 }
