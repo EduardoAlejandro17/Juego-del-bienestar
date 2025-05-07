@@ -22,7 +22,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             startBtn.classList.add('pressed');
             setTimeout(() => {
                 console.log('Redirigiendo a flies_game.html');
-                window.location.href = "/flies_game.html"; // Redirige a la página de juego
+                window.location.href = "flies_game.html"; // Redirige a la página de juego
             }, 200);
         });
     }
