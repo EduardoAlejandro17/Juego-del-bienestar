@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Juego de Colores</title>
+  <link rel="stylesheet" href="../../css/juego3.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+  <div id="game">
+    <!-- Instrucciones -->
+    <div id="instructions">
+      <div class="card">
+        <h1 id="welcome-title" class="game-title">¡Hola!</h1>
+
+        <p>Observa el color que aparece en la pantalla.</p>
+        <p>Después, elige el color correcto entre los botones.</p>
+        <p>Tienes 5 rondas. ¡Buena suerte!</p>
+
+        <div class="color-circles">
+          <div class="color-circle red"></div>
+          <div class="color-circle green"></div>
+          <div class="color-circle yellow"></div>
+          <div class="color-circle blue"></div>
+        </div>
+
+        <button id="startButton" onclick="startGame()">Continuar</button>
+      </div>
+    </div>
+
+    <!-- Área de juego -->
+    <div id="playArea" class="hidden">
+      <h1 id="title">¡Observa el color!</h1>
+
+      <div id="buttons" class="hidden">
+        <button class="btn" style="background-color: #FF5252;" onclick="checkAnswer('red')" title="Rojo"></button>
+        <button class="btn" style="background-color: #4CAF50;" onclick="checkAnswer('green')" title="Verde"></button>
+        <button class="btn" style="background-color: #FFD600;" onclick="checkAnswer('yellow')" title="Amarillo"></button>
+        <button class="btn" style="background-color: #2196F3;" onclick="checkAnswer('blue')" title="Azul"></button>
+      </div>
+
+      <div id="score" class="hidden"></div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script type="module" src="../../js/games/juego3/juego3.js"></script>
+
+</html>

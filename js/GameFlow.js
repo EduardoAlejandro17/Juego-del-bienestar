@@ -9,7 +9,9 @@ export default class GameFlow {
             return "../../games/flies/flies_start.html";
         } else if (!player.results.sequence) {
             return "../../games/sequence/sequence_start.html";
-        } else {
+        } else if (!player.results.colors) {
+            return "../../games/juego3/juego3.html"
+        }else {
             return "../../final_results.html";
         }
     }

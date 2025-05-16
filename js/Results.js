@@ -26,6 +26,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     showGameResult('sequence', player.results.sequence);
     showGameResult('colors', player.results.colors);
 
+
     // 2. Configurar sistema de interacción
     const interactionManager = new InteractionManager();
     const backBtn = document.getElementById('back-btn');

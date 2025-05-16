@@ -7,6 +7,7 @@ export default class Player {
             flies: null,
             sequence: null,
             colors: null
+
         };
     }
 
