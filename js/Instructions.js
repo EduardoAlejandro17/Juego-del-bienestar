@@ -1,3 +1,7 @@
+/**
+ * Módulo de Instrucciones
+ * Maneja la pantalla de instrucciones y la navegación a la pantalla de registro
+ */
 import InteractionManager from './InteractionManager.js';
 import PhysicalButtonsStrategy from './strategies/PhysicalButtonsStrategy.js';
 import TouchScreenStrategy from './strategies/TouchScreenStrategy.js';
@@ -6,7 +10,10 @@ import MouseStrategy from './strategies/MouseStrategy.js';
 document.addEventListener('DOMContentLoaded', () => {
     const continueBtn = document.getElementById('continue-btn');
     
-    // Función robusta de redirección
+    /**
+     * Función robusta de redirección que maneja la navegación
+     * a la siguiente pantalla con sistema de respaldo
+     */
     const handleContinue = () => {
         // Evitar múltiples ejecuciones
         if (continueBtn.classList.contains('processing')) return;
@@ -32,7 +39,10 @@ document.addEventListener('DOMContentLoaded', () => {
     // Configuración del InteractionManager
     const interactionManager = new InteractionManager();
     
-    // Estrategia física solo para botón verde (2)
+    /**
+     * Estrategia personalizada para botones físicos
+     * Solo responde al botón verde (número 2)
+     */
     class InstructionsPhysicalStrategy extends PhysicalButtonsStrategy {
         constructor() {
             super((buttonId) => {
@@ -43,6 +53,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+    // Configuración de estrategias de interacción
     interactionManager.setStrategyImplementations({
         PHYSICAL_BUTTONS: new InstructionsPhysicalStrategy(),
         TOUCH_SCREEN: new TouchScreenStrategy(handleContinue),
@@ -52,12 +63,15 @@ document.addEventListener('DOMContentLoaded', () => {
     // Evento click para mouse
     continueBtn.addEventListener('click', handleContinue);
 
-    // Detección automática de dispositivo
+    /**
+     * Detecta si se está usando un dispositivo táctil
+     */
     const isTouchDevice = () => {
         return ('ontouchstart' in window) || 
                (navigator.maxTouchPoints > 0);
     };
 
+    // Activar estrategia según el tipo de dispositivo
     interactionManager.setStrategy(
         isTouchDevice() ? 'TOUCH_SCREEN' : 'MOUSE'
     );

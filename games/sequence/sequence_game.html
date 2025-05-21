@@ -1,4 +1,12 @@
 <!DOCTYPE html>
+<!--
+    Pantalla Principal del Juego Secuencia
+    
+    Contiene el tablero donde se desarrolla el juego.
+    Muestra cuatro botones de colores que el usuario debe presionar
+    en el mismo orden en que se iluminan para seguir la secuencia.
+    Incluye un panel de información con puntuación, ronda y temporizador.
+-->
 <html lang="es">
 <head>
     <meta charset="UTF-8">
@@ -11,6 +19,7 @@
 </head>
 <body>
     <div class="game-container">
+        <!-- Panel de información del juego -->
         <div class="info-panel">
             <div class="score">Puntos: <span id="score">0</span></div>
             <div class="round">Ronda: <span id="round">1</span></div>
@@ -18,6 +27,7 @@
             <div class="message" id="message"></div>
         </div>
         
+        <!-- Tablero con botones de colores -->
         <div class="board">
             <div class="circle red"></div>
             <div class="circle green"></div>
@@ -25,6 +35,7 @@
             <div class="circle blue"></div>
         </div>
         
+        <!-- Botón para iniciar el juego -->
         <button id="startBtn" class="start-button">
             <span class="button-text">Comenzar Juego</span>
         </button>

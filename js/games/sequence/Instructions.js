@@ -1,3 +1,9 @@
+/**
+ * Módulo de Instrucciones del juego Secuencia
+ * 
+ * Controla la pantalla de instrucciones y prepara la interacción
+ * para iniciar el juego. Personaliza el saludo según el género del jugador.
+ */
 import MouseStrategy from '../../strategies/MouseStrategy.js';
 import PhysicalButtonsStrategy from '../../strategies/PhysicalButtonsStrategy.js';
 import TouchScreenStrategy from '../../strategies/TouchScreenStrategy.js';
@@ -37,13 +43,20 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 });
 
-// Funciones auxiliares
+/**
+ * Redirige al siguiente paso en el flujo del juego
+ * Si hay un problema, vuelve a la pantalla inicial de secuencia
+ */
 function redirectToNextStep() {
     const nextStep = GameFlow.nextGame() || '/games/sequence/sequence_start.html';
     console.log('[Debug] Redirigiendo a:', nextStep);
     window.location.replace(nextStep);
 }
 
+/**
+ * Configura el mensaje de bienvenida personalizado según el género
+ * @param {Object} player - Objeto del jugador con nombre y género
+ */
 function setupWelcomeMessage(player) {
     const greetings = {
         'el': 'Estimado', 'ella': 'Estimada', 'elle': 'Estimade', 'otro': 'Estimadx'
@@ -54,6 +67,10 @@ function setupWelcomeMessage(player) {
     }
 }
 
+/**
+ * Configura el botón de inicio y sus eventos
+ * @returns {HTMLElement|null} - Referencia al botón o null si no existe
+ */
 function setupStartButton() {
     const startBtn = document.getElementById('continue-btn');
     if (!startBtn) return null;
@@ -77,6 +94,10 @@ function setupStartButton() {
     return startBtn;
 }
 
+/**
+ * Habilita visualmente el botón de inicio después de un breve retraso
+ * @param {HTMLElement} btn - Elemento del botón a habilitar
+ */
 function enableStartButton(btn) {
     setTimeout(() => {
         btn.style.pointerEvents = 'auto';
@@ -85,6 +106,9 @@ function enableStartButton(btn) {
     }, 500);
 }
 
+/**
+ * Configura el sistema de interacción con múltiples estrategias
+ */
 async function setupInteraction() {
     const manager = new InteractionManager();
     
@@ -104,6 +128,10 @@ async function setupInteraction() {
     }
 }
 
+/**
+ * Maneja las interacciones del usuario con los diferentes dispositivos
+ * @param {string} action - Tipo de acción recibida
+ */
 function handleInteraction(action) {
     console.log('[Debug] Interacción:', action);
     if (action === 'continue') {
@@ -112,12 +140,20 @@ function handleInteraction(action) {
     }
 }
 
+/**
+ * Obtiene la ruta absoluta a partir de una ruta relativa
+ * @param {string} relativePath - Ruta relativa del archivo
+ * @returns {string} - Ruta absoluta completa
+ */
 function getAbsolutePath(relativePath) {
     // Obtener la ruta base del proyecto
     const basePath = window.location.pathname.split('/games/')[0];
     return `${basePath}/games/sequence/${relativePath}`;
 }
 
+/**
+ * Redirige a la pantalla inicial del juego de secuencia
+ */
 function redirectToSequenceStart() {
     window.location.replace('/games/sequence/sequence_start.html');
 }

@@ -1,4 +1,11 @@
 <!DOCTYPE html>
+<!--
+    Página de Registro
+    
+    Permite al usuario ingresar su nombre y seleccionar sus pronombres.
+    La interacción se realiza mediante botones de colores para los pronombres.
+    El formulario se valida antes de permitir al usuario continuar.
+-->
 <html lang="es">
 <head>
     <meta charset="UTF-8">
@@ -13,11 +20,13 @@
     <div class="content-box">
         <h1>¡Bienvenido!</h1>
         
+        <!-- Campo de entrada para el nombre -->
         <div class="form-group">
             <label for="name">Nombre:</label>
             <input type="text" id="name" placeholder="Tu nombre" autofocus autocomplete="name">
         </div>
         
+        <!-- Selección de pronombres mediante botones de colores -->
         <div class="form-group">
             <p>Pronombres</p>
             <div class="options">
@@ -28,6 +37,7 @@
             </div>
         </div>
         
+        <!-- Botón de inicio, deshabilitado hasta completar el formulario -->
         <button id="start-btn" disabled>
             <span class="btn-text">¡Comenzar!</span>
         </button>
@@ -42,4 +52,3 @@
     <script type="module" src="/js/Registration.js"></script>
 </body>
 </html>
-/

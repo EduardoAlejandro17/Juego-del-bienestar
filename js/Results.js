@@ -1,6 +1,6 @@
 /**
- * Manejador de resultados finales del juego
- * Controla la visualización de resultados y las acciones del usuario
+ * Módulo de Resultados Finales
+ * Muestra los resultados de todos los juegos y permite compartirlos
  */
 import Player from "./Player.js";
 import InteractionManager from "./InteractionManager.js";
@@ -77,8 +77,9 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 });
 
-// ===== Funciones auxiliares ===== //
-
+/**
+ * Muestra los resultados de un juego específico
+ */
 function showGameResult(game, data) {
     const gameElement = document.getElementById(`${game}-result`);
     if (!data || !gameElement) return;
@@ -98,12 +99,18 @@ function showGameResult(game, data) {
     }
 }
 
+/**
+ * Genera un mensaje motivacional según el puntaje
+ */
 function generateFinalMessage(score) {
     if (score >= 25) return "¡Excelente trabajo! Eres un maestro de la observación.";
     if (score >= 15) return "¡Buen trabajo! Sigue practicando para mejorar.";
     return "¡Sigue intentándolo! La práctica hace al maestro.";
 }
 
+/**
+ * Captura la pantalla de resultados y la comparte
+ */
 async function captureAndShareResults() {
     try {
         const resultsContainer = document.querySelector('.content-box');
@@ -139,6 +146,9 @@ async function captureAndShareResults() {
     }
 }
 
+/**
+ * Guarda la imagen cuando la función de compartir no está disponible
+ */
 function saveImageFallback(canvas, fileName) {
     const link = document.createElement('a');
     link.download = fileName;

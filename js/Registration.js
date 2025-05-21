@@ -1,3 +1,7 @@
+/**
+ * Módulo de Registro
+ * Gestiona el formulario de registro del jugador y la navegación al primer juego
+ */
 import MouseStrategy from './strategies/MouseStrategy.js';
 import TouchScreenStrategy from './strategies/TouchScreenStrategy.js';
 import PhysicalButtonsStrategy from './strategies/PhysicalButtonsStrategy.js';
@@ -5,6 +9,7 @@ import InteractionManager from './InteractionManager.js';
 import Player from './Player.js';
 
 document.addEventListener('DOMContentLoaded', () => {
+    // Inicialización de variables y elementos
     const player = new Player();
     const nameInput = document.getElementById('name');
     const startBtn = document.getElementById('start-btn');
@@ -20,17 +25,24 @@ document.addEventListener('DOMContentLoaded', () => {
     let selectedGender = null;
     let physicalButtonState = { red: false, green: false, yellow: false, blue: false };
 
+    /**
+     * Valida el formulario y habilita/deshabilita el botón de inicio
+     */
     function validateForm() {
         const isValid = player.name && selectedGender;
         startBtn.disabled = !isValid;
     }
 
+    // Evento de entrada de texto para el nombre
     nameInput.addEventListener('input', () => {
         player.name = nameInput.value.trim();
         console.log(`[DEBUG] Nombre ingresado: "${player.name}"`);
         validateForm();
     });
 
+    /**
+     * Selecciona el pronombre según el color del botón presionado
+     */
     function selectGender(color) {
         if (selectedGender) return;
     
@@ -52,6 +64,9 @@ document.addEventListener('DOMContentLoaded', () => {
         validateForm();
     }    
     
+    /**
+     * Maneja la interacción con botones físicos externos
+     */
     function handlePhysicalInteraction(color, pressed) {
         physicalButtonState[color] = pressed;
 
@@ -67,18 +82,23 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+    /**
+     * Procesa cualquier interacción (mouse, touch) con el sistema
+     */
     function handleInteraction(color) {
         if (!selectedGender) {
             selectGender(color);
         }
     }
 
+    // Configuración del sistema de interacción
     interactionManager.setStrategyImplementations({
         mouse: new MouseStrategy(handleInteraction),
         touch: new TouchScreenStrategy(handleInteraction),
         physical: new PhysicalButtonsStrategy(handlePhysicalInteraction)
     });
 
+    // Eventos para botones de selección de pronombres
     genderButtons.forEach(button => {
         button.addEventListener('click', () => {
             const color = button.classList[1]; // segundo classList es el color
@@ -86,6 +106,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
+    // Evento para el botón de iniciar
     startBtn.addEventListener('click', () => {
         if (!player.name || !selectedGender) {
             console.log("[DEBUG] Intento de continuar sin llenar el formulario.");

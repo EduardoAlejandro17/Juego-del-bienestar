@@ -1,3 +1,9 @@
+/**
+ * Módulo de Pantalla Final del juego Caza Moscas
+ * 
+ * Gestiona la pantalla donde el usuario selecciona el color que cree
+ * que recibió más moscas. Evalúa la respuesta y muestra el resultado.
+ */
 import MouseStrategy from '../../strategies/MouseStrategy.js';
 import TouchScreenStrategy from '../../strategies/TouchScreenStrategy.js';
 import PhysicalButtonsStrategy from '../../strategies/PhysicalButtonsStrategy.js';
@@ -5,33 +11,55 @@ import InteractionManager from '../../InteractionManager.js';
 import Player from '../../Player.js'
 import GameFlow from '../../GameFlow.js';
 
+/**
+ * Clase FinalScreen
+ * 
+ * Controla la interacción y lógica de la pantalla final del juego Caza Moscas
+ */
 class FinalScreen {
+    /**
+     * Constructor de la pantalla final
+     * Inicializa componentes y configura el sistema de interacción
+     */
     constructor() {
+        // Obtiene los resultados del juego guardados en localStorage
         this.results = JSON.parse(localStorage.getItem('gameResults'));
         console.log('Resultados del juego:', this.results);
+        
+        // Referencias a elementos del DOM
         this.resultDiv = document.getElementById('result');
         this.optionsContainer = document.querySelector('.options');
         this.actionButtonsContainer = document.getElementById('action-buttons');
+        
+        // Datos del resultado
         this.winner = this.results?.winner;
         this.tiedWinners = this.results?.tiedWinners || [];
         this.answered = false;
 
+        // Información de colores
         this.colors = ['red', 'green', 'yellow', 'blue'];
         this.colorNames = ['Rojo', 'Verde', 'Amarillo', 'Azul'];
 
+        // Sistema de interacción
         this.interactionManager = new InteractionManager();
 
         this.init();
     }
 
+    /**
+     * Inicializa la pantalla y configura el sistema de interacción
+     */
     init() {
+        // Validación de resultados
         if (!this.winner) {
             window.location.href = GameFlow.nextGame();
             return;
         }
 
+        // Crea los botones de colores para seleccionar
         this.createColorButtons();
 
+        // Configura las estrategias de interacción
         const strategyMap = {
             mouse: new MouseStrategy(this.handleColorSelection.bind(this)),
             touch: new TouchScreenStrategy(this.handleColorSelection.bind(this)),
@@ -41,7 +69,7 @@ class FinalScreen {
         this.interactionManager.setStrategyImplementations(strategyMap);
 
         try {
-            // Solo activar botones físicos si hay interacción del usuario
+            // Selecciona la estrategia según el tipo de dispositivo
             const urlParams = new URLSearchParams(window.location.search);
             if (urlParams.get('input') === 'physical') {
                 this.interactionManager.setStrategy('physical');
@@ -56,6 +84,9 @@ class FinalScreen {
         }
     }
 
+    /**
+     * Crea los botones de colores para que el usuario seleccione
+     */
     createColorButtons() {
         this.optionsContainer.innerHTML = '';
 
@@ -67,6 +98,10 @@ class FinalScreen {
         });
     }
 
+    /**
+     * Maneja la selección de un color por parte del usuario
+     * @param {string} color - Color seleccionado
+     */
     handleColorSelection(color) {
         if (this.answered) return;
         const selectedIndex = this.colors.indexOf(color);
@@ -76,6 +111,10 @@ class FinalScreen {
         setTimeout(() => this.handleSelection(selectedIndex), 300);
     }
 
+    /**
+     * Resalta visualmente el color seleccionado
+     * @param {number} selectedIndex - Índice del color seleccionado
+     */
     highlightSelection(selectedIndex) {
         document.querySelectorAll('.color-btn').forEach((btn, index) => {
             if (index === selectedIndex) {
@@ -87,25 +126,33 @@ class FinalScreen {
         });
     }
 
+    /**
+     * Procesa la selección del usuario y muestra el resultado
+     * @param {number} selectedIndex - Índice del color seleccionado
+     */
     handleSelection(selectedIndex) {
         if (this.answered) return;
         this.answered = true;
 
+        // Recupera los contadores de cada círculo
         const scores = [0, 0, 0, 0];
         this.results.targets.forEach(target => {
             scores[target.id] = target.count;
         });
 
+        // Ordena los resultados para determinar la posición
         const sorted = [...scores]
             .map((count, index) => ({ index, count }))
             .sort((a, b) => b.count - a.count);
 
+        // Asigna puntuación según la posición en el ranking
         const rank = sorted.findIndex(obj => obj.index === selectedIndex);
         const scoreByRank = [10, 8, 5, 3];
         const score = scoreByRank[rank] || 0;
 
         let resultMessage;
 
+        // Muestra mensaje según si hay empate o no
         if (this.winner.isTie) {
             const tiedColors = this.tiedWinners.map(i => this.colorNames[i]).join(', ');
             const isCorrect = this.tiedWinners.includes(selectedIndex);
@@ -122,7 +169,7 @@ class FinalScreen {
 
         this.resultDiv.innerHTML = resultMessage;
 
-        // Guardar resultado
+        // Guarda el resultado en el perfil del jugador
         const player = Player.loadFromLocalStorage();
         player.results.flies = {
             correct: selectedIndex === this.winner.id,
@@ -131,6 +178,7 @@ class FinalScreen {
         player.totalScore += score;
         player.saveToLocalStorage();
 
+        // Muestra el botón de continuar
         this.showActionButtons();
 
         // Reaplicar estilo visual al botón seleccionado
@@ -144,6 +192,9 @@ class FinalScreen {
         });
     }
 
+    /**
+     * Muestra el botón para continuar al siguiente juego
+     */
     showActionButtons() {
         this.actionButtonsContainer.innerHTML = '';
 
@@ -160,6 +211,7 @@ class FinalScreen {
     }
 }
 
+// Inicia la pantalla final cuando el DOM está cargado
 document.addEventListener('DOMContentLoaded', () => {
     if (typeof Player === 'undefined' || typeof GameFlow === 'undefined') {
         console.error('Error: Player o GameFlow no están definidos');
