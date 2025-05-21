@@ -1,3 +1,11 @@
+/**
+ * Estilos para la Página de Registro
+ * 
+ * Define la apariencia del formulario de registro, incluyendo
+ * campos de entrada, botones de colores para pronombres y
+ * botón de inicio.
+ */
+
 /* Estilos específicos para la pantalla de registro */
 .screen-container {
     display: flex;

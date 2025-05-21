@@ -1,4 +1,11 @@
 <!DOCTYPE html>
+<!--
+    Página de Resultados Finales
+    
+    Muestra los resultados de todos los juegos completados por el usuario.
+    Presenta puntajes individuales y totales, junto con un mensaje motivacional.
+    Permite al usuario regresar al inicio o compartir sus resultados.
+-->
 <html lang="es">
 <head>
     <meta charset="UTF-8">
@@ -15,10 +22,12 @@
         <div class="content-box results-container">
             <h1>Tus Resultados</h1>
             
+            <!-- Información del jugador -->
             <div class="player-info">
                 <h2 id="player-name"></h2>
             </div>
             
+            <!-- Detalles de resultados por juego -->
             <div class="results-detail">
                 <div class="game-result" id="flies-result">
                     <h3>Caza Moscas</h3>
@@ -39,12 +48,14 @@
                 </div>
             </div>
 
+            <!-- Resultado final y mensaje motivacional -->
             <div class="final-result">
                 <h2>Puntaje Total</h2>
                 <p id="total-score">0</p>
                 <p id="final-message"></p>
             </div>
             
+            <!-- Botones de acción -->
             <div class="action-buttons">
                 <button id="back-btn" class="action-btn red">Volver</button>
                 <button id="share-btn" class="action-btn blue">Compartir</button>

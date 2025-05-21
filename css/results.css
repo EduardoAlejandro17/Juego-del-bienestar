@@ -1,3 +1,11 @@
+/**
+ * Estilos para la Página de Resultados Finales
+ * 
+ * Define la apariencia de la pantalla de resultados, incluyendo
+ * tarjetas para cada juego, puntaje total y botones de acción.
+ * Incluye estados visuales para indicar éxito o error.
+ */
+
 /* ==================== */
 /* ESTILOS BASE */
 /* ==================== */
@@ -78,7 +86,7 @@ body {
     margin: 5px 0;
 }
 
-/* Resultado final */
+/* Resultado final y mensaje motivacional */
 .final-result {
     text-align: center;
     margin: 30px 0;
@@ -128,7 +136,7 @@ body {
     cursor: pointer;
     transition: all 0.3s;
     box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-    pointer-events: none;
+    pointer-events: none; /* Deshabilitados hasta que JS los active */
 }
 
 /* Efecto hover para todos los botones */
@@ -167,14 +175,16 @@ body {
 /* ESTADOS DE RESULTADO */
 /* ==================== */
 .success {
-    color: #4CAF50;
+    color: #4CAF50; /* Verde para aciertos */
 }
 
 .error {
-    color: #FF5252;
+    color: #FF5252; /* Rojo para errores */
 }
 
-/* Nuevos estilos para Strategy */
+/* ==================== */
+/* INTEGRACIÓN CON ARDUINO */
+/* ==================== */
 .color-btn.arduino-selected {
     animation: selected-pulse 0.5s;
 }
@@ -190,6 +200,7 @@ body {
     box-shadow: inset 0 0 10px rgba(0,0,0,0.3);
 }
 
+/* Indicador de conexión con Arduino */
 .arduino-connection {
     position: fixed;
     bottom: 10px;
@@ -198,34 +209,32 @@ body {
     border-radius: 20px;
     font-size: 14px;
     z-index: 1000;
-    display: flex;
-    align-items: center;
 }
 
 .arduino-connection.connected {
-    background: rgba(76, 175, 80, 0.9);
-    color: white;
+    background: rgba(76, 175, 80, 0.2);
+    color: #4CAF50;
 }
 
 .arduino-connection.disconnected {
-    background: rgba(244, 67, 54, 0.9);
-    color: white;
+    background: rgba(255, 82, 82, 0.2);
+    color: #FF5252;
 }
 
+/* Indicador visual de estado de conexión */
 .arduino-connection::before {
     content: '';
     display: inline-block;
     width: 10px;
     height: 10px;
     border-radius: 50%;
-    margin-right: 8px;
+    margin-right: 5px;
 }
 
 .arduino-connection.connected::before {
-    background: #fff;
-    box-shadow: 0 0 10px #fff;
+    background: #4CAF50;
 }
 
 .arduino-connection.disconnected::before {
-    background: #fff;
+    background: #FF5252;
 }

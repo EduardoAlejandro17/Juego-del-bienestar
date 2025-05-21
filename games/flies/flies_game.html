@@ -1,4 +1,12 @@
 <!DOCTYPE html>
+<!--
+    Pantalla Principal del Juego Caza Moscas
+    
+    Contiene el escenario donde se desarrolla el juego.
+    En esta pantalla aparecen los círculos de colores y las moscas
+    que se mueven hacia ellos. El usuario debe observar atentamente
+    cuál recibe más moscas durante 20 segundos.
+-->
 <html lang="es">
 <head>
     <meta charset="UTF-8">
@@ -10,10 +18,12 @@
     <meta http-equiv="Expires" content="0">
 </head>
 <body>
+    <!-- Contenedor principal del juego donde se generarán los elementos dinámicamente -->
     <div id="game-container">
         <div id="targets-container"></div>
     </div>
 
+    <!-- Scripts del juego -->
     <script src="../../js/games/flies/Target.js"></script>
     <script src="../../js/games/flies/Fly.js"></script>
     <script src="../../js/games/flies/Game.js"></script>

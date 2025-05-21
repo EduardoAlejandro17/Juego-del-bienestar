@@ -1,4 +1,11 @@
 <!DOCTYPE html>
+<!--
+    Pantalla de Inicio del Juego Secuencia
+    
+    Muestra las instrucciones para el segundo juego.
+    Explica al usuario que debe memorizar y repetir una secuencia 
+    de colores usando los botones correspondientes.
+-->
 <html lang="es">
 <head>
     <meta charset="UTF-8">
@@ -14,11 +21,13 @@
     <div class="instructions-container">
       <h1 id="welcome-title" class="game-title"></h1>
 
+        <!-- Instrucciones del juego -->
         <div class="instructions-message">
             <p>¡Bienvenido al juego de secuencias! Memoriza y repite los patrones de colores que se te mostrarán.</p>
             
             <p>¡Usa los botones correspondientes para repetir la secuencia!</p>
 
+            <!-- Representación visual de los botones -->
             <div class="color-circles">
                 <div class="color-circle red"></div>
                 <div class="color-circle green"></div>
@@ -29,6 +38,7 @@
             <p>¡Comencemos!</p>
         </div>
         
+        <!-- Botón para iniciar el juego -->
         <button id="continue-btn" class="green-button interactive">
             Comenzar
         </button>

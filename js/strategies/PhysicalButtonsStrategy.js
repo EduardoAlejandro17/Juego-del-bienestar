@@ -1,13 +1,20 @@
+/**
+ * Estrategia para interacción con botones físicos
+ * Utiliza Web Serial API para recibir señales de dispositivos externos (Arduino)
+ */
 import InteractionStrategy from './InteractionStrategy.js';
 
 export default class PhysicalButtonsStrategy extends InteractionStrategy {
     constructor(interactionHandler) {
         super(interactionHandler);
-        this.port = null;
-        this.reader = null;
+        this.port = null;      // Conexión al puerto serial
+        this.reader = null;    // Lector de datos del puerto
     }
 
-    async init() {
+    /**
+     * Inicia la conexión con el dispositivo físico
+     */
+    async activate() {
         try {
             if (!navigator.serial) {
                 throw new Error('Web Serial API no soportada');
@@ -22,6 +29,9 @@ export default class PhysicalButtonsStrategy extends InteractionStrategy {
         }
     }
 
+    /**
+     * Lee continuamente los datos del puerto serial
+     */
     async readData() {
         try {
             while (true) {
@@ -33,10 +43,13 @@ export default class PhysicalButtonsStrategy extends InteractionStrategy {
             }
         } catch (error) {
             console.error('Error lectura serial:', error);
-            this.cleanup();
+            this.deactivate();
         }
     }
 
+    /**
+     * Procesa la señal del botón y la convierte en una interacción
+     */
     processButtonPress(buttonId) {
         const buttonMap = {
             'B1': 'red',    // Botón 1 en Arduino
@@ -49,7 +62,10 @@ export default class PhysicalButtonsStrategy extends InteractionStrategy {
         if (color) this.interactionHandler(color);
     }
 
-    cleanup() {
+    /**
+     * Cierra la conexión y libera recursos
+     */
+    deactivate() {
         if (this.reader) {
             this.reader.cancel().catch(() => {});
             this.reader.releaseLock();

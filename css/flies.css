@@ -1,3 +1,11 @@
+/**
+ * Estilos para el Juego Caza Moscas
+ * 
+ * Define la apariencia de la pantalla del juego, incluyendo los círculos objetivos,
+ * moscas, temporizador y controles de interacción.
+ * Incluye estilos para las pantallas de instrucciones y resultados.
+ */
+
 /* ==================== */
 /* ESTILOS BASE GENERALES */
 /* ==================== */
@@ -29,6 +37,7 @@ body {
     max-width: 500px;
 }
 
+/* Contenedor principal del juego */
 #game-container {
     position: relative;
     width: 100vw;
@@ -64,6 +73,8 @@ body {
 /* ==================== */
 /* COMPONENTES DE JUEGO */
 /* ==================== */
+
+/* Círculos objetivo donde aparecerán las moscas */
 .target {
     position: absolute;
     width: 200px;
@@ -77,6 +88,7 @@ body {
     pointer-events: none;
 }
 
+/* Elemento mosca que se moverá hacia los objetivos */
 .fly {
     position: absolute;
     width: 20px;
@@ -86,6 +98,7 @@ body {
     z-index: 10;
 }
 
+/* Temporizador del juego */
 #timer {
     position: absolute;
     top: 20px;
@@ -112,6 +125,7 @@ body {
     margin: 30px 0;
 }
 
+/* Botón de acción principal */
 .btn-action {
     display: inline-block;
     background: #4CAF50;
@@ -127,6 +141,7 @@ body {
     cursor: default;
 }
 
+/* Botones de colores para seleccionar objetivos */
 .color-btn {
     width: 70px;
     height: 70px;
@@ -135,6 +150,7 @@ body {
     transition: all 0.3s;
 }
 
+/* Estados interactivos de los botones */
 .btn-action:hover {
     background: #45a049;
     transform: translateY(-2px);
@@ -153,6 +169,7 @@ body {
     transition: all 0.1s ease;
 }
 
+/* Estados visuales de selección y verificación */
 .color-btn.selected {
     transform: scale(1.1);
     box-shadow: 0 0 15px rgba(0,0,0,0.4);
@@ -170,6 +187,8 @@ body {
 /* ==================== */
 /* PALETA DE COLORES */
 /* ==================== */
+
+/* Rojo */
 .target.red, 
 .color-btn.red, 
 .key.red, 
@@ -186,6 +205,7 @@ body {
     background: #e53935 !important;
 }
 
+/* Verde */
 .target.green, 
 .color-btn.green, 
 .key.green, 

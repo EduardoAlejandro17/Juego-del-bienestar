@@ -1,10 +1,17 @@
+/**
+ * Estilos para la Página de Bienvenida
+ * 
+ * Define la apariencia de los círculos interactivos y textos en la pantalla inicial.
+ * Incluye responsividad para diferentes tamaños de pantalla.
+ */
+
 /* Estilos generales */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
     font-family: 'Arial', sans-serif;
-    -webkit-tap-highlight-color: transparent;
+    -webkit-tap-highlight-color: transparent; /* Elimina el destello en dispositivos táctiles */
 }
 
 body {
@@ -37,16 +44,16 @@ body {
     z-index: 1;
     pointer-events: auto;
     cursor: pointer;
-    touch-action: manipulation;
+    touch-action: manipulation; /* Mejora la respuesta táctil */
 }
 
-/* Efecto al hacer click */
+/* Efecto al hacer click o tocar */
 .circle:active {
     transform: scale(0.95);
     box-shadow: inset 0 0 15px rgba(0,0,0,0.4);
 }
 
-/* Posiciones originales */
+/* Posiciones y tamaños de cada círculo */
 .red {
     background-color: #FF5252;
     width: 450px;
@@ -80,7 +87,7 @@ body {
     top: 100px;
 }
 
-/* Texto central */
+/* Texto central con instrucciones */
 .text {
     position: absolute;
     text-align: center;
@@ -92,10 +99,10 @@ body {
     box-shadow: 0 5px 25px rgba(0,0,0,0.15);
     max-width: 80%;
     backdrop-filter: blur(5px);
-    user-select: none;
+    user-select: none; /* Previene selección de texto */
 }
 
-/* Optimización para móviles */
+/* Optimización para dispositivos móviles */
 @media (max-width: 768px) {
     .circle {
         width: 80% !important;
